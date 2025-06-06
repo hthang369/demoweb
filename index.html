@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhà phải có Nóc 🤨</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('./assets/att.ChrEUEMOeu4yjhnGY2gfiGHy4d2HdIGQvGNeNL0_7Ec.jpg') center center no-repeat;
+      background-size: contain;
+      filter: brightness(0.7);
+      z-index: 0;
+      animation: zoomFade 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomFade {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.1); opacity: 0.9; }
+    }
+
+    .circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 300px;
+      height: 300px;
+      animation: rotateCircle 20s linear infinite;
+    }
+
+    @keyframes rotateCircle {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .circle-text span {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4, 0 0 15px #ff69b4, 0 0 20px #ff69b4;
+      animation: neonGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes neonGlow {
+      0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4, 0 0 15px #ff69b4, 0 0 20px #ff69b4;
+      }
+      100% {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff1493, 0 0 40px #ff1493;
+      }
+    }
+
+    @keyframes colorCycle {
+      0% { color: #ff69b4; }
+      25% { color: #00ffff; }
+      50% { color: #ffff00; }
+      75% { color: #00ff00; }
+      100% { color: #ff69b4; }
+    }
+
+    .hearts, .falling-text {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hearts span, .falling-text span {
+      position: absolute;
+      font-size: 20px;
+      animation: fall linear infinite, neonGlow 2s ease-in-out infinite alternate, colorCycle 6s linear infinite;
+      white-space: nowrap;
+      color: #fff;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    iframe {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 60px;
+      border: none;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="circle-text">
+    <span>Nhà phải có nóc nghe chưa ? 🤨</span>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+  <div class="falling-text" id="fallingText"></div>
+
+  <audio id="myAudio" autoplay loop>
+    <source src="./assets/CoEmCho-MINMrA-4928094.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ phát nhạc.
+</audio>
+
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    const textContainer = document.getElementById('fallingText');
+
+    function createHeart() {
+      const heart = document.createElement('span');
+      heart.innerText = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = '-20px';
+      heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+      heart.style.fontSize = (16 + Math.random() * 16) + 'px';
+      heart.style.color = 'rgba(255, 192, 203, 0.9)';
+      heart.style.animationTimingFunction = 'ease-in';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    function createFallingText() {
+      const text = document.createElement('span');
+      text.innerText = 'Nhà phải có nóc nghe chưa? 🤨';
+      text.style.left = Math.random() * 100 + 'vw';
+      text.style.top = '-30px';
+      text.style.animationDuration = (3 + Math.random() * 2) + 's';
+      text.style.fontSize = (14 + Math.random() * 10) + 'px';
+      text.style.animationTimingFunction = 'ease-in';
+      textContainer.appendChild(text);
+      setTimeout(() => text.remove(), 6000);
+    }
+
+    setInterval(createHeart, 200);
+    setInterval(createFallingText, 400);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.addEventListener('click', function () {
+            document.getElementById('myAudio').play();
+        }, { once: true });
+    });
+  </script>
+</body>
+</html>
