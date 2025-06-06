@@ -170,11 +170,22 @@
     setInterval(createFallingText, 400);
 
     document.addEventListener('DOMContentLoaded', function () {
-        document.body.addEventListener('click', function () {
-            document.getElementById('myAudio').play();
-        }, { once: true });
-        document.body.click();
+      function playAudio() {
+          const audio = document.getElementById('myAudio');
+          audio.play().catch(err => {
+              console.log('Lỗi play audio:', err);
+          });
+
+          // Sau khi phát, bỏ event listener để không phát lại
+          document.body.removeEventListener('click', playAudio);
+          document.body.removeEventListener('touchstart', playAudio);
+      }
+
+      // Bắt cả sự kiện click và touchstart để đảm bảo tương tác trên mobile
+      document.body.addEventListener('click', playAudio, { once: true });
+      document.body.addEventListener('touchstart', playAudio, { once: true });
     });
+
   </script>
 </body>
 </html>
